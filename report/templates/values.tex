@@ -1,0 +1,54 @@
+\begin{enumerate}
+\item Шифруемое сообщение: "\VAR{des.message}"
+\item Бинарное представление сообщения: \\
+\VAR{'{:064b}'.format(des.blocks[0])}
+\item Синхропосылка: \\
+\VAR{'{:064b}'.format(des.initial)}
+\item Результат сложения исходного сообщения и синхропосылки: \\
+\VAR{'{:064b}'.format(des.steps[0])}
+\item Ключ: "\VAR{des.key_phrase}"
+\item Ключ (56 бит): \\
+\VAR{'{:056b}'.format(des.keys_preparation.number)}
+\item Ключ с битами чётности (64 бита): \\
+\VAR{'{:064b}'.format(des.keys_preparation.with_parity)}
+\item  Ключевые элементы:
+\begin{itemize}
+
+%% for k in des.key_elements
+\item $k_{\VAR{loop.index}} = \VAR{'{:012x}'.format(k)}$;
+%% endfor
+
+\end{itemize}
+
+\item Результат перестановки $IP$: \\
+%% set context = des.steps[1]
+bin: \VAR{'{:064b}'.format(context.shuffled)} \\
+hex: \VAR{'{:016x}'.format(context.shuffled)} \\
+
+\item Результаты итераций ECB:
+
+\begin{longtable}{|l|l|l|l|l|}
+\hline
+$i$ &
+$H_i$ &
+$L_i$ &
+$f(k_i, L_i)$ &
+$H_i \bigoplus f(k_i, L_i)$ \\
+\hline
+
+%% for steps in context.history
+\VAR{loop.index} &
+\VAR{'{:08x}'.format(steps.left)} &
+\VAR{'{:08x}'.format(steps.right)} &
+\VAR{'{:08x}'.format(steps.f)} &
+\VAR{'{:08x}'.format(steps.f_left)} \\
+\hline
+%% endfor
+
+
+\end{longtable}
+
+
+\item Результат конечной перестановки $IP^{-1}$: \VAR{'{:016x}'.format(des.result)}.
+
+\end{enumerate}
